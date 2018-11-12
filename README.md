@@ -3,6 +3,9 @@ A classifier that recognizes emotions in non-facial images. A collaboration betw
 
 # Important implementation details for project milestone
 
+# Data
+We are using a dataset of 85,000 labelled images referenced by Q. You, J. Luo, H. Jin, and J. Yang in the paper Building a large scale dataset for image emotion recognition: The fine print and the benchmark. More specifically, the dataset is a folder of .CSV files, with each file containing the url to an image and a label for the following emotions: amusement, anger, awe, contentment, disgust, excitement, fear, and sadness. Each label indicates the most prevalent emotion in the images with an integer--1 for amusement, 2 for anger... In order to parse and clean this data, we wrote a script to read the file contained in the url, check to see if it is a valid image and download the image with its corresponding label. We resized the images to (32, 32, 3) while extracting them from the urls, because we had to fit within the constrains of what our memory was capable of. We then shuffled the images with their corresponding labels. Our script split this data 90-10-10 into train, dev, and test folders, and our labels were sorted into trainY, devY, and testY vectors, respectively. We decided to split the data this way in order to maximize the size of the training set, given that we have a relatively large amount of data to work with. 
+
 ## What we have
 We currently have one model, a fractal CNN that takes an image as an input and directly outputs a classification by emotion. In the ipynb file I uploaded, there is a link to a paper which describes the advantages of a fractal CNN in great detail. Definitely look over that when writing the milestone. I chose to use a fractal net mainly because we don't have a ton of data, and fractal nets allow you to create very deep neural networks without losing the ability to itentity map. There are a lot of other advantages of fractal nets that you can find in the paper (for example, I think they might be smaller than resnets).
 
@@ -18,4 +21,3 @@ This is our more "vanilla" transfer learning model. We want to take the activati
 
 This model is a bit more complicated, but not by much. Before captioning our images, the repo will output an encoding for the image (the network passes that encoding through another NN to get the captions). We are going to take that image encoding and connect it to 1-2 FC layers in order to get our softmax output for emotion classification. Again, this gives us the same benefits of transfer learning, this time with a bit more end-to-end control.
 
-That should be everything, Kathrene can explain the data side of things, call with questions :)
